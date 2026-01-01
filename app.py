@@ -285,6 +285,22 @@ PACKING_LIST = {
     ],
 }
 
+# ============== EVENTS CALENDAR ==============
+EVENTS = [
+    {"month": "January", "event": "New Year Celebrations", "desc": "Beach parties, hotel events, fireworks", "type": "Festival"},
+    {"month": "February", "event": "Independence Day (18th)", "desc": "National holiday - parades, cultural shows in Banjul", "type": "National"},
+    {"month": "February", "event": "Roots Homecoming Festival", "desc": "African diaspora celebration - music, culture, heritage tours", "type": "Cultural"},
+    {"month": "March-April", "event": "Easter Weekend", "desc": "Beach activities, church services", "type": "Religious"},
+    {"month": "April", "event": "Eid al-Fitr", "desc": "End of Ramadan - family gatherings, feasts, new clothes", "type": "Religious"},
+    {"month": "May", "event": "International Roots Festival", "desc": "Bi-annual heritage festival - Kunta Kinteh focus", "type": "Cultural"},
+    {"month": "June", "event": "Eid al-Adha", "desc": "Feast of Sacrifice - major Islamic holiday", "type": "Religious"},
+    {"month": "July", "event": "Kartong Festival", "desc": "Arts & culture festival in Kartong village", "type": "Cultural"},
+    {"month": "November", "event": "Tourism Season Opens", "desc": "Hotels reopen, flights resume, perfect weather begins", "type": "Tourism"},
+    {"month": "December", "event": "Christmas & New Year", "desc": "Peak tourism - book early! Beach parties, hotel events", "type": "Festival"},
+    {"month": "Year-round", "event": "Bird Watching Season", "desc": "Best Nov-Apr when migratory birds arrive", "type": "Nature"},
+    {"month": "Year-round", "event": "Fishing Competitions", "desc": "Sport fishing events, especially Nov-May", "type": "Sports"},
+]
+
 # ============== SESSION STATE ==============
 if "page" not in st.session_state: st.session_state.page = "home"
 
@@ -344,6 +360,14 @@ with st.sidebar:
     
     if st.button("🎒 Packing List", key="nav_packing", use_container_width=True):
         st.session_state.page = "packing"
+        st.rerun()
+    
+    if st.button("📅 Events Calendar", key="nav_events", use_container_width=True):
+        st.session_state.page = "events"
+        st.rerun()
+    
+    if st.button("📧 Contact Us", key="nav_contact", use_container_width=True):
+        st.session_state.page = "contact"
         st.rerun()
     
     st.markdown("---")
@@ -703,7 +727,122 @@ elif page == "packing":
     st.markdown("- 💊 **Start malaria tablets** before you leave!")
     st.markdown("- 📱 **Download offline maps** - internet can be spotty")
 
+# ============== EVENTS CALENDAR PAGE ==============
+elif page == "events":
+    st.markdown("# 📅 Events & Festivals")
+    st.markdown("Plan your trip around The Gambia's best events!")
+    st.markdown("---")
+    
+    filter_type = st.selectbox("Filter by type:", ["All Events", "Festival", "Cultural", "Religious", "National", "Tourism", "Nature", "Sports"])
+    
+    for event in EVENTS:
+        show = filter_type == "All Events" or event["type"] == filter_type
+        if show:
+            type_emoji = {"Festival": "🎉", "Cultural": "🎭", "Religious": "🕌", "National": "🇬🇲", "Tourism": "✈️", "Nature": "🦜", "Sports": "🎣"}.get(event["type"], "📅")
+            st.markdown(f"""<div class="hotel-card">
+                <h3 style="margin:0;">{type_emoji} {event['event']}</h3>
+                <p style="margin:0.25rem 0; color:#3A7728; font-weight:500;">📅 {event['month']}</p>
+                <p style="margin:0.5rem 0;">{event['desc']}</p>
+                <span style="background:#e8f5e9; padding:0.25rem 0.5rem; border-radius:4px; font-size:0.8rem;">{event['type']}</span>
+            </div>""", unsafe_allow_html=True)
+    
+    st.markdown("---")
+    st.markdown("**💡 Tips:**")
+    st.markdown("- 🕌 **Ramadan dates change** yearly - check Islamic calendar")
+    st.markdown("- 🎉 **Book early** for Independence Day & Roots Festival")
+    st.markdown("- 🦜 **Best birding:** November to April")
+    st.markdown("- 🏖️ **Peak season:** November to February")
+
+# ============== CONTACT PAGE ==============
+elif page == "contact":
+    st.markdown("# 📧 Contact Us")
+    st.markdown("Get in touch for custom trips, questions, or partnerships")
+    st.markdown("---")
+    
+    col1, col2 = st.columns([2, 1])
+    
+    with col1:
+        st.markdown("### Send us a message")
+        
+        name = st.text_input("Your Name *", placeholder="John Smith")
+        email = st.text_input("Email Address *", placeholder="john@example.com")
+        subject = st.selectbox("Subject", [
+            "General Inquiry",
+            "Custom Trip Planning", 
+            "Hotel/Tour Booking Help",
+            "Business Partnership",
+            "List My Business",
+            "Report an Issue",
+            "Other"
+        ])
+        message = st.text_area("Your Message *", placeholder="Tell us how we can help you...", height=150)
+        
+        if st.button("📤 Send Message", type="primary", use_container_width=True):
+            if name and email and message:
+                # In production, this would send to email/database
+                st.success("✅ Message sent! We'll get back to you within 24 hours.")
+                st.balloons()
+            else:
+                st.error("Please fill in all required fields (*)")
+        
+        st.markdown("---")
+        st.markdown("### 📬 Subscribe to Newsletter")
+        st.markdown("Get travel tips, deals, and updates about The Gambia")
+        
+        news_cols = st.columns([3, 1])
+        with news_cols[0]:
+            newsletter_email = st.text_input("Email", placeholder="your@email.com", label_visibility="collapsed", key="newsletter")
+        with news_cols[1]:
+            if st.button("Subscribe", use_container_width=True):
+                if newsletter_email and "@" in newsletter_email:
+                    st.success("✅ Subscribed!")
+                else:
+                    st.error("Enter valid email")
+    
+    with col2:
+        st.markdown("### Quick Contact")
+        st.markdown("""
+        **📱 WhatsApp:**  
+        [+220 XXX XXXX](https://wa.me/220XXXXXXX)
+        
+        **📧 Email:**  
+        info@gambiatravel.com
+        
+        **🌐 Social Media:**  
+        [Facebook](#) • [Instagram](#) • [Twitter](#)
+        
+        ---
+        
+        **🏢 For Businesses:**  
+        Want to list your hotel, tour, or service?  
+        Contact us for partnership opportunities!
+        
+        ---
+        
+        **⏰ Response Time:**  
+        Usually within 24 hours
+        """)
+
 # ============== FOOTER ==============
 st.markdown("---")
 st.markdown('<div class="flag-bar"></div>', unsafe_allow_html=True)
-st.markdown("<p style='text-align:center; color:#888; font-size:0.85rem;'>✈️ The Gambia Travel Assistant | <a href='https://visitthegambia.gm'>Official Tourism Board</a></p>", unsafe_allow_html=True)
+
+# Social media and footer
+footer_cols = st.columns([1, 2, 1])
+with footer_cols[1]:
+    st.markdown("""
+    <div style="text-align:center; padding:1rem 0;">
+        <p style="margin-bottom:0.5rem;">
+            <a href="#" style="margin:0 10px; text-decoration:none; font-size:1.5rem;">📘</a>
+            <a href="#" style="margin:0 10px; text-decoration:none; font-size:1.5rem;">📸</a>
+            <a href="#" style="margin:0 10px; text-decoration:none; font-size:1.5rem;">🐦</a>
+            <a href="#" style="margin:0 10px; text-decoration:none; font-size:1.5rem;">▶️</a>
+        </p>
+        <p style="color:#888; font-size:0.85rem; margin:0;">
+            ✈️ The Gambia Travel Assistant | <a href='https://visitthegambia.gm'>Official Tourism Board</a>
+        </p>
+        <p style="color:#aaa; font-size:0.75rem; margin-top:0.25rem;">
+            © 2026 TGTA | Made with ❤️ for The Smiling Coast
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
