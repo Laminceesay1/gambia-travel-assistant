@@ -196,6 +196,95 @@ ATTRACTIONS = [
     {"name": "Bijilo Forest Park", "type": "Wildlife", "desc": "Family-friendly monkey walk near the coast", "cost": "$3-5"},
 ]
 
+# ============== FOOD DATA ==============
+FOOD_DATA = {
+    "dishes": [
+        {"name": "Benachin", "aka": "Jollof Rice", "desc": "One-pot rice dish - national dish! Tomato-based with meat or fish.", "try": "Must try", "price": "D50-150"},
+        {"name": "Domoda", "aka": "Groundnut Stew", "desc": "Rich, creamy peanut butter stew with meat - comfort food!", "try": "Must try", "price": "D60-150"},
+        {"name": "Superkanja", "aka": "Okra Soup", "desc": "Slimy okra-based stew - traditional Mandinka dish.", "try": "Adventurous", "price": "D50-120"},
+        {"name": "Afra", "aka": "Grilled Meat", "desc": "Street food skewers with spicy sauce - best at night markets!", "try": "Must try", "price": "D30-80"},
+        {"name": "Tapalapa", "aka": "Gambian Bread", "desc": "Baguette-style bread, crispy outside, soft inside.", "try": "Daily staple", "price": "D5-15"},
+        {"name": "Yassa", "aka": "Onion Sauce", "desc": "Chicken or fish in tangy lemon-onion sauce.", "try": "Must try", "price": "D80-180"},
+    ],
+    "drinks": [
+        {"name": "Attaya", "aka": "Green Tea", "desc": "3-round tea ceremony - symbol of hospitality. Never refuse!", "price": "Often free"},
+        {"name": "Wonjo", "aka": "Hibiscus Juice", "desc": "Sweet red drink from hibiscus flowers - refreshing!", "price": "D15-30"},
+        {"name": "Baobab Juice", "aka": "Bouye", "desc": "Nutritious drink from baobab fruit - energy booster.", "price": "D20-40"},
+        {"name": "Ginger Juice", "aka": "Ginger Drink", "desc": "Fresh ginger with lemon - warming and medicinal.", "price": "D15-30"},
+    ],
+    "markets": [
+        {"name": "Albert Market, Banjul", "desc": "Largest market - fish, produce, street food. Go early!"},
+        {"name": "Serekunda Market", "desc": "Biggest in country - everything! Can be overwhelming."},
+        {"name": "Kololi Night Market", "desc": "Afra (grilled meat) heaven - best after 7pm."},
+    ]
+}
+
+# ============== PHRASES DATA ==============
+PHRASES = {
+    "mandinka": [
+        {"english": "Hello", "local": "I be di", "pronun": "ee-bay-dee"},
+        {"english": "How are you?", "local": "Here be di?", "pronun": "hay-ray-bay-dee"},
+        {"english": "I'm fine", "local": "Mbee jaata", "pronun": "em-bay-jah-tah"},
+        {"english": "Thank you", "local": "Abaraka", "pronun": "ah-bah-rah-kah"},
+        {"english": "Please", "local": "Dukare", "pronun": "doo-kah-ray"},
+        {"english": "Yes", "local": "Haa", "pronun": "haa"},
+        {"english": "No", "local": "Hani", "pronun": "hah-nee"},
+        {"english": "Goodbye", "local": "Fo tuma doo", "pronun": "foh-too-mah-doh"},
+        {"english": "How much?", "local": "Jelu le?", "pronun": "jeh-loo-lay"},
+        {"english": "Too expensive", "local": "A songo jata", "pronun": "ah-song-oh-jah-tah"},
+    ],
+    "wolof": [
+        {"english": "Hello", "local": "Salaam aleekum", "pronun": "sah-lahm-ah-lay-koom"},
+        {"english": "How are you?", "local": "Nanga def?", "pronun": "nahn-gah-def"},
+        {"english": "I'm fine", "local": "Mangi fi rekk", "pronun": "mahn-gee-fee-rek"},
+        {"english": "Thank you", "local": "Jërëjëf", "pronun": "jeh-reh-jef"},
+        {"english": "Please", "local": "Bu la neexee", "pronun": "boo-lah-neh-hay"},
+        {"english": "Yes", "local": "Waaw", "pronun": "wow"},
+        {"english": "No", "local": "Déedéet", "pronun": "day-dayt"},
+        {"english": "Goodbye", "local": "Maa ngi dem", "pronun": "mah-ngee-dem"},
+        {"english": "How much?", "local": "Ñaata la?", "pronun": "nyah-tah-lah"},
+        {"english": "Too expensive", "local": "Dafa seer", "pronun": "dah-fah-seer"},
+    ],
+}
+
+# ============== PACKING LIST ==============
+PACKING_LIST = {
+    "essentials": [
+        "✈️ Passport (6+ months valid)",
+        "💵 Cash (EUR/USD) for Tourism Levy",
+        "📱 Phone + charger (UK plugs work)",
+        "💳 Backup debit/credit card",
+        "📄 Travel insurance docs",
+        "📷 Camera",
+    ],
+    "clothing": [
+        "👕 Light cotton clothes",
+        "🩳 Shorts/light pants",
+        "👗 Modest dress for villages/mosques",
+        "🩴 Sandals + comfortable walking shoes",
+        "🧢 Sun hat",
+        "🕶️ Sunglasses",
+        "🏊 Swimwear",
+        "🧥 Light jacket (Dec-Feb evenings)",
+    ],
+    "health": [
+        "💊 Malaria tablets (start before!)",
+        "🦟 DEET insect repellent",
+        "🧴 SPF 30+ sunscreen",
+        "💧 Rehydration sachets",
+        "🩹 Basic first aid kit",
+        "💊 Any prescription meds",
+    ],
+    "useful": [
+        "🔦 Flashlight (power cuts happen)",
+        "🎒 Day backpack",
+        "📖 Guidebook/offline maps",
+        "🧻 Tissues/wet wipes",
+        "🔌 Power adapter (UK Type G)",
+        "🎁 Small gifts for locals (pens, sweets)",
+    ],
+}
+
 # ============== SESSION STATE ==============
 if "page" not in st.session_state: st.session_state.page = "home"
 
@@ -236,6 +325,25 @@ with st.sidebar:
     
     if st.button("🎫 Book Tours", key="nav_tours", use_container_width=True):
         st.session_state.page = "tours"
+        st.rerun()
+    
+    st.markdown("---")
+    st.markdown("**🛠️ Tools**")
+    
+    if st.button("🍛 Food & Cuisine", key="nav_food", use_container_width=True):
+        st.session_state.page = "food"
+        st.rerun()
+    
+    if st.button("💱 Currency", key="nav_currency", use_container_width=True):
+        st.session_state.page = "currency"
+        st.rerun()
+    
+    if st.button("🗣️ Phrases", key="nav_phrases", use_container_width=True):
+        st.session_state.page = "phrases"
+        st.rerun()
+    
+    if st.button("🎒 Packing List", key="nav_packing", use_container_width=True):
+        st.session_state.page = "packing"
         st.rerun()
     
     st.markdown("---")
@@ -452,6 +560,148 @@ elif page == "attractions":
                 st.session_state.search_query = a['name']
                 st.session_state.page = "results"
                 st.rerun()
+
+# ============== FOOD & CUISINE PAGE ==============
+elif page == "food":
+    st.markdown("# 🍛 Food & Cuisine")
+    st.markdown("Taste the flavors of The Gambia!")
+    st.markdown("---")
+    
+    tab1, tab2, tab3 = st.tabs(["🍽️ Must-Try Dishes", "🥤 Drinks", "🏪 Where to Eat"])
+    
+    with tab1:
+        for dish in FOOD_DATA["dishes"]:
+            st.markdown(f"""<div class="hotel-card">
+                <h3 style="margin:0;">{dish['name']} <span style="color:#888; font-weight:normal;">({dish['aka']})</span></h3>
+                <p style="margin:0.5rem 0;">{dish['desc']}</p>
+                <p style="margin:0; color:#666;">💵 {dish['price']} &nbsp;|&nbsp; 🏷️ {dish['try']}</p>
+            </div>""", unsafe_allow_html=True)
+    
+    with tab2:
+        for drink in FOOD_DATA["drinks"]:
+            st.markdown(f"""<div class="hotel-card">
+                <h3 style="margin:0;">{drink['name']} <span style="color:#888; font-weight:normal;">({drink['aka']})</span></h3>
+                <p style="margin:0.5rem 0;">{drink['desc']}</p>
+                <p style="margin:0; color:#666;">💵 {drink['price']}</p>
+            </div>""", unsafe_allow_html=True)
+    
+    with tab3:
+        st.markdown("### Best Places to Try Local Food")
+        for market in FOOD_DATA["markets"]:
+            st.markdown(f"**📍 {market['name']}** - {market['desc']}")
+        
+        st.markdown("---")
+        st.markdown("**💡 Tips:**")
+        st.markdown("- Always try **Benachin** - it's the national dish!")
+        st.markdown("- Accept **Attaya** tea if offered - it's rude to refuse")
+        st.markdown("- Street food is safe at busy stalls")
+        st.markdown("- Wash hands before eating (often communal dishes)")
+
+# ============== CURRENCY CONVERTER PAGE ==============
+elif page == "currency":
+    st.markdown("# 💱 Currency Converter")
+    st.markdown("Gambian Dalasi (GMD) exchange rates")
+    st.markdown("---")
+    
+    rates = get_exchange_rates()
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        amount = st.number_input("Amount", min_value=0.0, value=100.0, step=10.0)
+        from_curr = st.selectbox("From", ["USD", "EUR", "GBP", "GMD"])
+    
+    with col2:
+        st.markdown("<br>", unsafe_allow_html=True)
+        to_curr = st.selectbox("To", ["GMD", "USD", "EUR", "GBP"])
+    
+    if from_curr != to_curr:
+        if from_curr == "GMD":
+            result = amount / rates.get(to_curr, {}).get("rate", 65)
+        elif to_curr == "GMD":
+            result = amount * rates.get(from_curr, {}).get("rate", 65)
+        else:
+            gmd_amount = amount * rates.get(from_curr, {}).get("rate", 65)
+            result = gmd_amount / rates.get(to_curr, {}).get("rate", 65)
+        
+        st.markdown(f"### {amount:,.2f} {from_curr} = **{result:,.2f} {to_curr}**")
+    
+    st.markdown("---")
+    st.markdown("### Current Rates (approximate)")
+    
+    rate_cols = st.columns(3)
+    with rate_cols[0]:
+        st.metric("🇺🇸 USD", f"{rates['USD']['rate']:.0f} GMD")
+    with rate_cols[1]:
+        st.metric("🇪🇺 EUR", f"{rates['EUR']['rate']:.0f} GMD")
+    with rate_cols[2]:
+        st.metric("🇬🇧 GBP", f"{rates['GBP']['rate']:.0f} GMD")
+    
+    st.markdown("---")
+    st.markdown("**💡 Money Tips:**")
+    st.markdown("- 💵 **Bring cash** (USD/EUR/GBP) - ATMs unreliable")
+    st.markdown("- 🏦 Change money at banks or authorized bureaus")
+    st.markdown("- 💳 Cards only work at large hotels/restaurants")
+    st.markdown("- 🚫 Don't change money on the street")
+    st.markdown("- 💰 Budget: $50-100/day comfortable")
+
+# ============== PHRASES PAGE ==============
+elif page == "phrases":
+    st.markdown("# 🗣️ Useful Phrases")
+    st.markdown("Learn some local language - locals will love it!")
+    st.markdown("---")
+    
+    lang = st.radio("Choose language:", ["Mandinka", "Wolof"], horizontal=True)
+    
+    phrases = PHRASES["mandinka"] if lang == "Mandinka" else PHRASES["wolof"]
+    
+    st.markdown(f"### Essential {lang} Phrases")
+    
+    for p in phrases:
+        st.markdown(f"""<div class="hotel-card">
+            <h4 style="margin:0; color:#333;">🇬🇧 {p['english']}</h4>
+            <p style="margin:0.25rem 0; font-size:1.25rem; color:#3A7728;"><strong>{p['local']}</strong></p>
+            <p style="margin:0; color:#888; font-style:italic;">Sounds like: "{p['pronun']}"</p>
+        </div>""", unsafe_allow_html=True)
+    
+    st.markdown("---")
+    st.markdown("**💡 Tips:**")
+    st.markdown("- **English** is the official language - you'll be fine!")
+    st.markdown("- Saying **'Abaraka'** (thank you) will make everyone smile")
+    st.markdown("- **'Toubab'** means foreigner - it's not offensive")
+    st.markdown("- Learning greetings shows respect for the culture")
+
+# ============== PACKING LIST PAGE ==============
+elif page == "packing":
+    st.markdown("# 🎒 Packing Checklist")
+    st.markdown("Everything you need for The Gambia")
+    st.markdown("---")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("### ✈️ Essentials")
+        for item in PACKING_LIST["essentials"]:
+            st.checkbox(item, key=f"pack_{item}")
+        
+        st.markdown("### 👕 Clothing")
+        for item in PACKING_LIST["clothing"]:
+            st.checkbox(item, key=f"pack_{item}")
+    
+    with col2:
+        st.markdown("### 💊 Health")
+        for item in PACKING_LIST["health"]:
+            st.checkbox(item, key=f"pack_{item}")
+        
+        st.markdown("### 🔧 Useful Items")
+        for item in PACKING_LIST["useful"]:
+            st.checkbox(item, key=f"pack_{item}")
+    
+    st.markdown("---")
+    st.markdown("**💡 Don't Forget:**")
+    st.markdown("- 🔌 **UK-style plugs** (Type G) are used")
+    st.markdown("- 💵 **€40 cash** for Tourism Levy (€20 in + €20 out)")
+    st.markdown("- 💊 **Start malaria tablets** before you leave!")
+    st.markdown("- 📱 **Download offline maps** - internet can be spotty")
 
 # ============== FOOTER ==============
 st.markdown("---")
