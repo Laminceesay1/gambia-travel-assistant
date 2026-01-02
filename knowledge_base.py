@@ -901,6 +901,143 @@ You'll get the best of The Gambia in a day!""",
 
 **📷 Photos:** Always ASK before photographing people.""",
 
+    # ==================== PLACES & CITIES ====================
+    "banjul": """**Banjul - The Capital City 🏛️**
+
+📍 **Banjul** is the capital of The Gambia, located on St. Mary's Island at the mouth of the Gambia River.
+
+**What to See:**
+- **Arch 22** - Iconic 35-meter triumphal arch with panoramic views
+- **Albert Market** - Vibrant local market (fruits, crafts, fabrics)
+- **National Museum** - Gambian history & culture
+- **Banjul Cathedral** - Historic colonial-era church
+- **July 22nd Square** - Central gathering place
+
+**History:**
+- Founded in 1816 by the British as Bathurst
+- Renamed Banjul after independence (1973)
+- Originally built to control the slave trade
+- One of Africa's smallest capitals
+
+**Getting There:**
+- From Kololi: 30-45 min taxi (500-800 GMD)
+- Ferry from Barra across the river
+
+**Tips:**
+- Visit Albert Market early morning (less crowded)
+- Arch 22 has the best city views
+- Half-day is enough to explore
+- Combine with a ferry ride to Barra
+
+**Population:** ~35,000 (metro area ~400,000)""",
+
+    "serekunda": """**Serekunda - The Largest City 🏙️**
+
+📍 **Serekunda** is The Gambia's largest city (pop. 400,000+), the commercial heart of the country!
+
+**What to See & Do:**
+- **Serekunda Market** - The biggest market in Gambia!
+  - Everything: clothes, electronics, spices, fabrics
+  - Great for authentic local experience
+  - Bargain hard!
+- **Afra Spots** - Best grilled meat at night
+- **Westfield Junction** - Busy transport hub
+
+**Why Visit:**
+- See real Gambian daily life
+- Best prices for shopping
+- Authentic local food
+- Cultural immersion
+
+**Getting There:**
+- From Kololi: 10-15 min (150-250 GMD)
+- Gele-gele (minibus) from anywhere
+
+**Tips:**
+- Keep valuables secure in crowded areas
+- Go with a local guide first time
+- Market best in morning (less hot)
+- Night time = afra & street food heaven!
+
+**Location:** Between tourist coast & Banjul""",
+
+    "kololi": """**Kololi - Tourist Hub & Nightlife Center 🎉**
+
+📍 **Kololi** is the heart of Gambia's tourism, where most visitors stay!
+
+**What Kololi Offers:**
+- **Senegambia Strip** - Main tourist street
+  - Restaurants, bars, nightclubs
+  - Craft markets, supermarkets
+  - Banks & ATMs
+- **Kololi Beach** - Popular sandy beach
+- **Bijilo Forest Park** - Nearby (walking distance)
+
+**Best For:**
+- First-time visitors
+- Nightlife & dining
+- Meeting other travelers
+- Easy access to everything
+
+**Where to Stay:**
+- Budget: Luigi's, African Village
+- Mid-range: Senegambia Beach Hotel
+- Luxury: Coco Ocean Resort (nearby)
+
+**Restaurants:**
+- Butcher's Shop (steaks)
+- Solomon's Beach Bar (seafood)
+- Ali Baba's (Lebanese/local)
+
+**Nightlife:**
+- Duplex nightclub
+- Jokor Night Club
+- Various beach bars
+
+**Getting Around:**
+- Most places walkable
+- Taxi to Banjul: 500-800 GMD
+- To Airport: 1000-1500 GMD""",
+
+    # ==================== HISTORY ====================
+    "history": """**History of The Gambia 📜**
+
+**Early History:**
+- Region inhabited for thousands of years
+- Part of great West African empires (Ghana, Mali, Songhai)
+- Mandinka, Wolof, Fula peoples settled along the river
+
+**The Slave Trade Era (1600s-1800s):**
+- Portuguese first Europeans to arrive (1455)
+- British established trading posts
+- James Island (now Kunta Kinteh Island) was a major slave depot
+- Thousands shipped to Americas
+- "Roots" by Alex Haley brought this history to world attention
+
+**Colonial Period:**
+- British colony from 1816
+- Capital Banjul founded as "Bathurst"
+- Surrounded by French Senegal
+- Remained a British possession for 150 years
+
+**Independence:**
+- **February 18, 1965** - Independence from Britain
+- Dawda Jawara first president (ruled until 1994)
+- Brief confederation with Senegal (Senegambia, 1982-1989)
+
+**Modern Era:**
+- 1994: Military coup (Yahya Jammeh)
+- 2017: Democratic transition (Adama Barrow elected)
+- Today: Peaceful democracy, tourism growing
+
+**Must-Visit Historical Sites:**
+- Kunta Kinteh Island (UNESCO) - Slave trade history
+- Jufureh Village - Roots connection
+- Wassu Stone Circles (UNESCO) - Ancient megaliths
+- Fort Bullen - Colonial fortification
+
+**Did You Know?** The Gambia is Africa's smallest mainland country!""",
+
     "mandinka greeting": """**Mandinka Greetings & Phrases:**
 
 **Basics:**
@@ -1130,6 +1267,20 @@ KEYWORD_MAP = {
     "banjul to basse": "banjul to basse",
     "basse": "banjul to basse",
     "kololi to banjul": "kololi to banjul",
+    "banjul": "banjul",
+    "the capital": "banjul",
+    "capital city": "banjul",
+    "serekunda": "serekunda",
+    "serrekunda": "serekunda",
+    "kololi": "kololi",
+    "senegambia": "kololi",
+    "tourist area": "kololi",
+    "history": "history",
+    "gambia history": "history",
+    "history of gambia": "history",
+    "independence": "history",
+    "colonial": "history",
+    "slave trade": "kunta kinteh",
     "from senegal": "from senegal",
     "cap skirring": "from senegal",
     "dakar": "from senegal",
@@ -1212,8 +1363,21 @@ def get_smart_answer(query: str) -> dict:
         query_clean = query_clean.replace(word + " ", " ")
     query_clean = " ".join(query_clean.split())
     
-    for keyword, answer_key in KEYWORD_MAP.items():
+    # First: Check for EXACT match in KEYWORD_MAP (highest priority)
+    if query_lower in KEYWORD_MAP:
+        answer_key = KEYWORD_MAP[query_lower]
+        if answer_key in QUICK_ANSWERS:
+            return {"answer": QUICK_ANSWERS[answer_key], "confidence": 0.98, "matched": answer_key}
+    
+    # Second: Check for EXACT match in QUICK_ANSWERS keys
+    if query_lower in QUICK_ANSWERS:
+        return {"answer": QUICK_ANSWERS[query_lower], "confidence": 0.98, "matched": query_lower}
+    
+    # Third: Sort keywords by length (longer first) for partial matching
+    sorted_keywords = sorted(KEYWORD_MAP.keys(), key=len, reverse=True)
+    for keyword in sorted_keywords:
         if keyword in query_lower:
+            answer_key = KEYWORD_MAP[keyword]
             if answer_key in QUICK_ANSWERS:
                 return {"answer": QUICK_ANSWERS[answer_key], "confidence": 0.95, "matched": answer_key}
     
